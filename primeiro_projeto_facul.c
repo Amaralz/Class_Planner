@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <stdio.h>
-//#include <windows.h>
+#include <windows.h>
 
 struct alunoficha
 {
@@ -32,7 +32,7 @@ int menu ()
     printf("\t[2] Calcular média da sua AV1,AV2,AVD:\n");
     printf("\t[3] Agenda:\n");
     printf("\t[4] Cronometro:\n");
-    printf("\t[5] Ficha do aluno::\n");
+    printf("\t[5] Ficha do aluno:\n");
     scanf("%d",&op);
     system("CLS");
     }while(op < 1 || op > 5);
@@ -89,6 +89,7 @@ switch (cc)
 void media (float *med){
     float av[3],medr=0,avd;
     int i;
+    printf("<===================== Class Planner ====================>\n");
     printf("<========== Cálculo da media ==========>\n\n");
     for( i = 0; i < 2; i++)
     {
@@ -117,6 +118,7 @@ void media (float *med){
   
 void agenda ()
 {
+    printf("<===================== Class Planner ====================>\n");
  	printf("Digite seu compromisso do dia:\n");
   	getchar();
     gets(aluno.comp);
@@ -127,11 +129,14 @@ void agenda ()
 }
 
 void cronometro ()
-{/*
+{
    int sec=0,seg;
     int min=0,mini;
     int hr=0,hra;
     int i=0;
+    char yes[5];
+    int result;
+    printf("<===================== Class Planner ====================>\n");
      printf("Insira quanto tempo vc quer estudar? Considere a sequencia de HORAS;MINUTOS;SEGUNDOS\n");
     printf("\nHoras:\n");
     scanf("%d",&hra);
@@ -141,14 +146,22 @@ void cronometro ()
     printf("==============================");
     printf("\nSegundos:\n");
     scanf("%d",&seg);
-    
+    printf("você deseja ter uma pausa a cada 60s?\n");
+    scanf("%s",yes);
+    result = strcmp(yes,"sim");
    do {
         system("cls");
+        
         printf("\n\t\t\t\tCRONOMETRO\n\n");
         printf("\n\t\t\t\t%dh:%dm:%ds\n\n", hr,min,sec);
        if(sec==60){
             sec=0;
-           min++;//
+            min++;
+            if (result == 0 )
+            {
+                system("pause"); 
+            }
+            
         }
         if(min==60){
            min=0;
@@ -158,11 +171,16 @@ void cronometro ()
            hr=0;
            break;
         }
-        Sleep(1000);
+        Sleep(10);
        sec++;
+       if (sec == seg && min == mini && hr == hra)
+        {   system("CLS");
+            printf("\n\t\t\t\tCRONOMETRO\n\n");
+            printf("\n\t\t\t\t%dh:%dm:%ds\n\n", hr,min,sec); 
+        }
     }while (sec != seg || min != mini || hr != hra);
     system("pause");
-    */
+    
 }
 
 void result (float med)
@@ -180,7 +198,6 @@ int main()
 	setlocale(LC_ALL, "Portuguese");
     system("CLS");
     int op,resp;
-  char comp[100];
     float med;
     cadastro();
     do{
